@@ -22,10 +22,9 @@ isosceles = cathetus_1 == cathetus_2
 
 
 result = if righ_triangle 
-   "Треугольник прямоугольный"
-elsif righ_triangle && isosceles  
-  "Треугольник прямоугольный и равнобедренный"
-else "Это треугольник, но не прямоугольный"
-end
+           "Треугольник прямоугольный"
+         elsif righ_triangle && isosceles  
+           "Треугольник прямоугольный и равнобедренный"
+         else "Это треугольник, но не прямоугольный"
+         end
 puts result
-
