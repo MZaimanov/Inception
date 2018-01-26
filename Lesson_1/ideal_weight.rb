@@ -8,7 +8,7 @@ growth = gets.chomp
 ideal = growth.to_i - 110
 
 if ideal >= 0
-	puts "#{name}, Ваш идеальный вес #{ideal}"
+  puts "#{name}, Ваш идеальный вес #{ideal}"
 else 
-	puts "#{name}, Ваш вес уже оптимальный!!!"
+  puts "#{name}, Ваш вес уже оптимальный!!!"
 end
