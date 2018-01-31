@@ -15,12 +15,13 @@ loop do
   basket[name] = { "price" => price, "count" => count }  
 end 
 
-basket.each { |name, hash| sum += hash["price"] * hash["count"] }
-
-puts basket
-puts "Итого: #{sum}"
-
-basket.each do |name, hash|
-	total = hash["price"] * hash["count"]
+total = 0
+basket.each do |name, hash| 
+  sum = hash["price"] * hash["count"]
+  total += sum
 	puts "Итогова сумма за: #{name}: #{total}"
 end
+
+puts "Итого: #{sum}"
+puts basket
+

@@ -1,4 +1,4 @@
-array = [ 0, 1 ]
+array = [0, 1]
 
 fib = 1
 
