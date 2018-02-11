@@ -24,4 +24,3 @@ end
 
 puts "Итого: #{sum}"
 puts basket
-
