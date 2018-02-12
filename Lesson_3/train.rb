@@ -14,7 +14,7 @@ class Train
   end
 
   def speed_up(value)
-  	@speed += value
+    @speed += value
   end
 
   def speed_down(value)
@@ -23,15 +23,15 @@ class Train
   end
 
   def stop
-  	@speed = 0
+    @speed = 0
   end
 
   def add_wagon
-  	if @speed.zero?
+    if @speed.zero?
       puts "Остановите поезд...демоны"
-  	else
-  		@wagon += 1
-  	end
+    else
+      @wagon += 1
+    end
   end
 
   def del_wagon
