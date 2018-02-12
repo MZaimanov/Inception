@@ -1,63 +1,67 @@
 class Train
 
-TYPE = [:passanger, :cargo]
-WAGON_ACTION = [:up, :down]
+  TYPE = [:passanger, :cargo]
 
-  attr_accessor :speed, :number, :wagon, :route, :station
+  attr_accessor :number 
   attr_reader :type
 
   def initialize(number, type, wagon)
     @number = number
     @type = type
     @wagon = wagon
+    @stations = stations
     @speed = 0
   end
 
-   def speed_up
-  	self.speed += 10
+  def speed_up(value)
+  	@speed += value
+  end
+
+  def speed_down(value)
+    @speed -= value
+    @speed = 0 if value < 0
   end
 
   def stop
-  	self.speed = 0
+  	@speed = 0
   end
 
-  def add_wagon(wagon)
-  	if speed.zero?
-  		if wagon == WAGON_ACTION[0]
-  			@wagon += 1
-  		elsif wagon == WAGON_ACTION[1]
-  			@wagon -= 1
-  		else
-  			puts "Неизвестное значение"
-  		end
+  def add_wagon
+  	if @speed.zero?
+      puts "Остановите поезд...демоны"
   	else
-  		puts "Остановите поезд...демоны"
+  		@wagon += 1
   	end
   end
 
+  def del_wagon
+    if @speed.zero?
+      puts "Остановите поезд...демоны"
+    else
+      @wagon -= 1
+    end
+  end
+
   def add_route(route)
-    @current_route = route
+    @route = route
     @station_index = 0
     current_station.receive_train(self)
   end
 
   def current_station
-    @current_route.stations_list[@station_index]
+    @route.stations[@station_index]
   end
 
   def next_station
-    @current_route.stations_list[@station_index + 1] if @station_index != @current_route.stations_list.size - 1
+    @route.stations[@station_index + 1] if @station_index != @route.stations.size - 1
   end
 
   def previous_station
-    @current_route.stations_list[@index_station - 1] if @station_index != 0
+    @route.stations[@station_index - 1] if @station_index != 0
   end
-  
-
-
 
   def go_next_station
-    if current_station != @current_route.stations_list.last
+    if next_station != @route.stations.last
       current_station.send_train(self)
       @station_index += 1
       current_station.receive_train(self)
@@ -67,7 +71,7 @@ WAGON_ACTION = [:up, :down]
   end
 
   def go_previous_station
-    if current_station != @current_route.stations_list.last
+    if next_station != @route.stations.last
       current_station.send_train(self)
       @station_index -= 1
       current_station.receive_train(self)
