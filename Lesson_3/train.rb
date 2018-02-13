@@ -2,7 +2,7 @@ class Train
 
   TYPE = [:passanger, :cargo]
 
-  attr_accessor :number 
+  attr_accessor :number
   attr_reader :type
 
   def initialize(number, type, wagon)
@@ -26,6 +26,10 @@ class Train
     @speed = 0
   end
 
+  def current_speed
+    @speed
+  end
+
   def add_wagon
     if @speed.zero?
       @wagon += 1
@@ -36,10 +40,14 @@ class Train
 
   def del_wagon
     if @speed.zero?
-      @wagon -= 1
+      @wagon -= 1 if @wagon > 0
     else
       puts "Остановите поезд...демоны"
     end
+  end
+
+  def current_number_wagon
+    @wagon
   end
 
   def add_route(route)
