@@ -31,7 +31,6 @@ class Train
       @wagon += 1
     else
       puts "Остановите поезд...демоны"
-      @wagon += 1
     end
   end
 
