@@ -28,17 +28,18 @@ class Train
 
   def add_wagon
     if @speed.zero?
-      puts "Остановите поезд...демоны"
+      @wagon += 1
     else
+      puts "Остановите поезд...демоны"
       @wagon += 1
     end
   end
 
   def del_wagon
     if @speed.zero?
-      puts "Остановите поезд...демоны"
-    else
       @wagon -= 1
+    else
+      puts "Остановите поезд...демоны"
     end
   end
 
