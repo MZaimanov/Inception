@@ -11,35 +11,50 @@ require_relative 'program.rb'
 main = Program.new
 
 loop do
-  puts '--------------'
-  puts 'Введите необходимое число:'
-  puts '1 - Создание станции'
-  puts '2 - Создание поезда'
-  puts '3 - Прицепить вагон к составу'
-  puts '4 - Отцепить вагон от состава'
-  puts '5 - Поместить поезд на станцию'
-  puts '6 - Просмотреть список станций'
-  puts '7 - Просмотреть список поездов на станции'
-  puts '8 - Выход'
+  puts "--------------"
+  puts "Введите необходимое число:"
+  puts "1 - Создание станции"
+  puts "2 - Создание поезда"
+  puts "3 - Создание маршрута"
+  puts "4 - Редоктирование маршрута"
+  puts "5 - Просмотр текцщих маршрутов"
+  puts "6 - Назначение маршрута поезду"
+  puts "7 - Прицепить вагон к составу"
+  puts "8 - Отцепить вагон от состава"
+  puts "9 - Поместить поезд на станцию"
+  puts "10 - Перемещение состава по маршруту"
+  puts "11 - Просмотреть список станций"
+  puts "12 - Просмотреть список поездов на станции"
+  puts "0 - Выход"
 
   action_number = gets.chomp.to_i
 
 case action_number
   when 1
-    main.create_station
+    main.add_station
   when 2
     main.create_train
   when 3
-    main.add_wagon
+    main.create_route
   when 4
-    main.del_wagon
+    main.edit_route
   when 5
-    main.set_station_for_train
+    main.show_routes
   when 6
-    main.show_stations_list
+    main.get_route
   when 7
-    main.train_list_on_station
+    main.add_wagon
   when 8
+    main.del_wagon
+  when 9
+    main.set_station_for_train
+  when 10
+    main.move_train
+  when 11
+    main.show_stations_list
+  when 12
+    main.train_list_on_station
+  when 0
     break
   else
     next

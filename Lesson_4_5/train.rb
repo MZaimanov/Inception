@@ -53,19 +53,19 @@ class Train
   end
 
   def current_station
-    route.stations[@station_index]
+    @route.stations[@station_index]
   end
 
   def next_station
-    route.stations[@station_index + 1] if @station_index != @route.stations.size - 1
+    @route.stations[@station_index + 1] if @station_index != @route.stations.size - 1
   end
 
   def previous_station
-    route.stations[@station_index - 1] if @station_index != 0
+    @route.stations[@station_index - 1] if @station_index != 0
   end
 
   def go_next_station
-    if next_station != @route.stations.last
+    if current_station != @route.stations.last
       current_station.send_train(self)
       @station_index += 1
       current_station.receive_train(self)
@@ -75,7 +75,7 @@ class Train
   end
 
   def go_previous_station
-    if next_station != @route.stations.last
+    if current_station != @route.stations.first
       current_station.send_train(self)
       @station_index -= 1
       current_station.receive_train(self)
