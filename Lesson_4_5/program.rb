@@ -195,7 +195,7 @@ class Program
     puts "Укажите состав для отцепления вагонов"
     num = gets.to_i
     if @trains.count >= num
-      current_train = @trains[num -1]
+      current_train = @trains[num - 1]
       if current_train.wagons.count > 0
         puts "Укажите вагон для отцепления:"
         current_train.wagons.each_with_index { |wagons, index| puts "#{index + 1}) #{wagons.view_type}"}
@@ -225,7 +225,7 @@ class Program
       station = get_station
       station.receive_train(train)
       puts "Поезд №#{train.number} помещен на станцию #{station.name}"
-      end
+    end
   end
 
   def move_train
