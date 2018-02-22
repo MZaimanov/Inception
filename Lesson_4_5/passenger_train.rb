@@ -1,6 +1,10 @@
 class PassengerTrain < Train
-  def type
-    :passenger_train
+
+  attr_reader :type
+
+  def initialize(number)
+    @type = :passenger_train
+    super
   end
 
   def view_type

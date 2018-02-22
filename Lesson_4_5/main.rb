@@ -12,19 +12,20 @@ main = Program.new
 
 loop do
   puts "--------------"
-  puts "Введите необходимое число:"
+  puts "Укажите необходимое число:"
   puts "1 - Создание станции"
   puts "2 - Создание поезда"
   puts "3 - Создание маршрута"
   puts "4 - Редоктирование маршрута"
   puts "5 - Просмотр текцщих маршрутов"
   puts "6 - Назначение маршрута поезду"
-  puts "7 - Прицепить вагон к составу"
-  puts "8 - Отцепить вагон от состава"
-  puts "9 - Поместить поезд на станцию"
-  puts "10 - Перемещение состава по маршруту"
-  puts "11 - Просмотреть список станций"
-  puts "12 - Просмотреть список поездов на станции"
+  puts "7 - Создать вагон в депо"
+  puts "8 - Прицепить вагон к составу"
+  puts "9 - Отцепить вагон от состава"
+  puts "10 - Поместить поезд на станцию"
+  puts "11 - Перемещение состава по маршруту"
+  puts "12 - Просмотреть список станций"
+  puts "13 - Просмотреть список поездов на станции"
   puts "0 - Выход"
 
   action_number = gets.chomp.to_i
@@ -43,16 +44,18 @@ case action_number
   when 6
     main.get_route
   when 7
-    main.add_wagon
+    main.create_wagon
   when 8
-    main.del_wagon
+    main.add_wagon
   when 9
-    main.set_station_for_train
+    main.del_wagon
   when 10
-    main.move_train
+    main.set_station_for_train
   when 11
-    main.show_stations_list
+    main.move_train
   when 12
+    main.show_stations_list
+  when 13
     main.train_list_on_station
   when 0
     break

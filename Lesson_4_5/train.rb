@@ -84,10 +84,6 @@ class Train
     end
   end
 
-  def type
-    :train
-  end
-
   protected
 
     attr_writer :speed, :route #Для использования внутри класса
