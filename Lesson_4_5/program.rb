@@ -1,5 +1,5 @@
 class Program
-  attr_accessor :stations, :trains
+  attr_accessor :stations, :trains, :routes, :wagons
 
   def initialize
     @stations = []
@@ -28,6 +28,8 @@ class Program
       #create_cargo_train(name)
       @trains << CargoTrain.new(name)
       puts "Грузовой поезд №#{name} создан."
+    else
+      puts "Не верный тип поезда"
     end
   end
 
@@ -39,19 +41,21 @@ class Program
     puts "Укажите номер станции отправления"
     one_station = gets.chomp.to_i
 
-    if @stations.include? @stations[one_station - 1]
+    if @stations.include?( @stations[one_station - 1] )
       start_station = @stations[one_station - 1]
     else
       puts "Не верно введена станция отправления"
+      return
     end
 
     puts "Укажите номер станции прибытия"
     two_station = gets.chomp.to_i
 
-    if @stations.include? @stations[two_station - 1]
+    if @stations.include?( @stations[two_station - 1] ) && ( start_station != @stations[two_station - 1] )
       end_station = @stations[two_station - 1]
     else
       puts "Не верно введена станция назначения"
+      return
     end
 
     route = Route.new(start_station, end_station)
@@ -242,6 +246,9 @@ class Program
     current_train = @trains[num - 1]
 
     if @trains.count >= num && @trains[num - 1] != nil
+      puts "Неверный порядковый номер или поезду не назначен маршрут."
+      return
+    else
       puts "1 - отправить на следующую станцию"
       puts "2 - возвратить на предыдущую станцию"
       move_choice = gets.to_i
@@ -255,9 +262,6 @@ class Program
         puts "Повторите ввод."
         move_train
       end
-    else
-      puts "Неверный порядковый номер или поезду не назначен маршрут."
-      move_train
     end
   end
 
