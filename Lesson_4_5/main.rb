@@ -7,11 +7,12 @@ require_relative 'passenger_train.rb'
 require_relative 'cargo_wagon.rb'
 require_relative 'cargo_train.rb'
 require_relative 'program.rb'
+require_relative 'colors.rb'
 
 main = Program.new
 
 loop do
-  puts "--------------"
+  puts "=========================="
   puts "Укажите необходимое число:"
   puts "1 - Создание станции"
   puts "2 - Создание поезда"
@@ -27,12 +28,13 @@ loop do
   puts "12 - Просмотреть список станций"
   puts "13 - Просмотреть список поездов на станции"
   puts "0 - Выход"
+  puts "==========================="
 
   action_number = gets.chomp.to_i
 
 case action_number
   when 1
-    main.add_station
+    main.create_station
   when 2
     main.create_train
   when 3

@@ -8,10 +8,11 @@ class Program
     @wagons = []
   end
 
-  def add_station
+  def create_station
     puts "Укажите название станции"
     name = gets.chomp
     stations << Station.new(name)
+    puts "Создана станция: #{name}".green
   end
 
   def create_train
@@ -21,20 +22,18 @@ class Program
     type = gets.chomp.to_i
 
     if type == 1
-      #create_passenger_train(name)
       @trains << PassengerTrain.new(name)
-      puts "Пасажирский поезд №#{name} создан."
+      puts "Пасажирский поезд №#{name} создан.".green
     elsif type == 2
-      #create_cargo_train(name)
       @trains << CargoTrain.new(name)
-      puts "Грузовой поезд №#{name} создан."
+      puts "Грузовой поезд №#{name} создан.".green
     else
-      puts "Не верный тип поезда"
+      puts "Не верный тип поезда".red
     end
   end
 
   def create_route
-    return puts "Для создания маршрута необходимы две точки назначения" if @stations.count < 2
+    return puts "Для создания маршрута необходимы две точки назначения".red if @stations.count < 2
 
     show_stations_list
 
@@ -43,8 +42,9 @@ class Program
 
     if @stations.include?( @stations[one_station - 1] )
       start_station = @stations[one_station - 1]
+      puts "Создана начальная точка маршрута: #{start_station.name}".green
     else
-      puts "Не верно введена станция отправления"
+      puts "Не верно введена станция отправления".red
       return
     end
 
@@ -53,27 +53,28 @@ class Program
 
     if @stations.include?( @stations[two_station - 1] ) && ( start_station != @stations[two_station - 1] )
       end_station = @stations[two_station - 1]
+      puts "Создана каонечная точка маршрута: #{end_station.name}".green
     else
-      puts "Не верно введена станция назначения"
+      puts "Не верно введена станция назначения".red
       return
     end
 
     route = Route.new(start_station, end_station)
     @routes << route
-
+    puts "Маршрут создан".green
   end
 
   def show_routes
     puts "Список маршрутов:"
     if @routes.empty?
-      puts "На данный момент маршруты отсутствуют"
+      puts "На данный момент маршруты отсутствуют".red
     else
       @routes.each_with_index { |route, index| puts " :#{index + 1} Маршрут #{route.show_route}"}
     end
   end
 
   def edit_route
-    return puts "Необходимо создать хотябы один маршрут" if @routes.empty?
+    return puts "Необходимо создать хотябы один маршрут".red if @routes.empty?
 
     show_routes
 
@@ -92,7 +93,7 @@ class Program
         show_stations_list
         puts "Укажите станцию для добавления"
         to_route = gets.to_i
-        current_route.add_station(@stations[to_route - 1])
+        current_route.create_station(@stations[to_route - 1])
         puts "Станция добавлена. Текущие станции маршрута:"
         current_route.stations_list
       elsif route_choice == 2
@@ -104,11 +105,11 @@ class Program
         puts "Станция удалена. Текущие станции маршрута:"
         current_route.stations_list
       else
-        puts "Укажите верные данные."
+        puts "Укажите верные данные.".red
         return
       end
     else
-      puts "Повторите"
+      puts "Повторите".red
     end
   end
 
@@ -117,14 +118,14 @@ class Program
   end
 
   def get_route
-      return puts "Необходимо создать хотябы один поезд." if @trains.empty?
+      return puts "Необходимо создать хотябы один поезд.".red if @trains.empty?
       puts "Список поездов:"
       train_list
       puts "Выберете поезда для задания ему маршрута"
       num = gets.to_i
       if @trains.count >= num
         if @routes.empty?
-          puts "Нет ни одного маршрута"
+          puts "Нет ни одного маршрута".red
           create_route
         else
           show_routes
@@ -135,7 +136,7 @@ class Program
           puts "Маршрут #{train_current_route.show_route}назначен Поезду #{@trains[num - 1].number}"
         end
       else
-        puts "Повторите ввод!"
+        puts "Повторите ввод!".red
         add_route
       end
   end
@@ -147,20 +148,20 @@ class Program
     if wagon_choice == 1
       wagon = PassengerWagon.new
       @wagons << wagon
-      puts "В депо добавлен новый ПАССАЖИРСКИЙ вагон"
+      puts "В депо добавлен новый ПАССАЖИРСКИЙ вагон".green
     elsif wagon_choice == 2
       wagon = CargoWagon.new
       @wagons << wagon
-      puts "В депо добавлен новый ГРУЗОВОЙ вагон"
+      puts "В депо добавлен новый ГРУЗОВОЙ вагон".green
     else
-      puts "Ошибка. Повторите ввод"
+      puts "Ошибка. Повторите ввод".red
       return
     end
   end
 
   def add_wagon
-    return puts "Нет ни одного поезда. Создайте хотябы один поезд." if @trains.empty?
-    return puts "В депо нет вагонов. Создайте новые или отцепите имеющиеся" if @wagons.empty?
+    return puts "Нет ни одного поезда. Создайте хотябы один поезд.".red if @trains.empty?
+    return puts "В депо нет вагонов. Создайте новые или отцепите имеющиеся".red if @wagons.empty?
 
     puts "Список поездов:"
     train_list
@@ -177,23 +178,23 @@ class Program
         if current_train.class == CargoTrain && wagon.type == :cargo_wagon && wagon != nil
           current_train.add_wagon(wagon)
           @wagons.slice!(wagon_choice - 1)
-          puts "К поезду №#{current_train.number} прицеплен один ГРУЗОВОЙ вагон. #{current_train.wagons}"
+          puts "К поезду №#{current_train.number} прицеплен один ГРУЗОВОЙ вагон. #{current_train.wagons}".green
         elsif current_train.class == PassengerTrain && wagon.type == :passenger_wagon && wagon != nil
           current_train.add_wagon(wagon)
           @wagons.slice!(wagon_choice - 1)
-          puts "К поезду №#{current_train.number} прицеплен один ПАССАЖИРСКИЙ вагон. #{current_train.wagons}"
+          puts "К поезду №#{current_train.number} прицеплен один ПАССАЖИРСКИЙ вагон. #{current_train.wagons}".green
         else
-          puts "Выберете правельный тип вагона"
+          puts "Выберете правельный тип вагона".red
           return
         end
       else
-        puts "Ошибка. Повторите ввод"
+        puts "Ошибка. Повторите ввод".red
         return
     end
   end
 
   def del_wagon
-    return puts ("Создайте поезд") if @trains.empty?
+    return puts ("Создайте поезд".red) if @trains.empty?
     puts "Список поездов:"
     train_list
     puts "Укажите состав для отцепления вагонов"
@@ -206,12 +207,12 @@ class Program
         wagons_choice = gets.to_i
         @wagons << current_train.wagons[wagons_choice - 1]
         current_train.wagons[wagons_choice - 1]
-        puts "От состава #{current_train.number} отцеплен один вагон."
+        puts "От состава #{current_train.number} отцеплен один вагон.".green
       else
-        puts "Состав не имеет вагонов."
+        puts "Состав не имеет вагонов.".red
       end
     else
-      puts "Указан не верный состав"
+      puts "Указан не верный состав".red
     end
   end
 
@@ -220,24 +221,24 @@ class Program
   end
 
   def set_station_for_train
-    return puts "Необходимо создать станции" if @stations.empty?
+    return puts "Необходимо создать станции".red if @stations.empty?
 
     if trains.nil?
-      puts "Пока нет ни одного поезда!"
+      puts "Пока нет ни одного поезда!".red
     else
       train = get_train
       station = get_station
       station.receive_train(train)
-      puts "Поезд №#{train.number} помещен на станцию #{station.name}"
+      puts "Поезд №#{train.number} помещен на станцию #{station.name}".green
     end
   end
 
   def move_train
-    return puts "Необходимо создать хотябы один поезд." if @trains.empty?
+    return puts "Необходимо создать хотябы один поезд.".red if @trains.empty?
 
-    return puts "Необходимо создать хотябы один маршрут" if @routes.empty?
+    return puts "Необходимо создать хотябы один маршрут".red if @routes.empty?
 
-    return puts "Необходимо создать станции" if @stations.empty?
+    return puts "Необходимо создать станции".red if @stations.empty?
 
     puts "Список поездов:"
     train_list
@@ -246,7 +247,7 @@ class Program
     current_train = @trains[num - 1]
 
     if @trains.count >= num && @trains[num - 1] != nil
-      puts "Неверный порядковый номер или поезду не назначен маршрут."
+      puts "Неверный порядковый номер или поезду не назначен маршрут.".red
       return
     else
       puts "1 - отправить на следующую станцию"
@@ -254,27 +255,27 @@ class Program
       move_choice = gets.to_i
       if move_choice == 1
         current_train.go_next_station
-        puts "Поезд №#{current_train.number} прибыл на станцию #{current_train.current_station.name}"
+        puts "Поезд №#{current_train.number} прибыл на станцию #{current_train.current_station.name}".green
       elsif move_choice == 2
         current_train.go_previous_station
-        puts "Поезд №#{current_train.number} прибыл на станцию #{current_train.current_station.name}"
+        puts "Поезд №#{current_train.number} прибыл на станцию #{current_train.current_station.name}".green
       else
-        puts "Повторите ввод."
+        puts "Повторите ввод.".red
         move_train
       end
     end
   end
 
   def show_stations_list
-      @stations.empty? ? puts("Пока нет ни одной станции!") : @stations.each_with_index { |station, index| puts "#{index + 1} - #{station.name}" }
+      @stations.empty? ? puts("Пока нет ни одной станции!".red) : @stations.each_with_index { |station, index| puts "#{index + 1} - #{station.name}" }
   end
 
   def train_list_on_station
     if stations.empty?
-      puts "Пока нет ни одной станции!"
+      puts "Пока нет ни одной станции!".red
     else
       station = get_station
-      station.trains.empty? ? puts("На станции нет ни одного поезда!") : station.trains.each_with_index { |train, index| puts "#{index + 1} - #{train.number}" }
+      station.trains.empty? ? puts("На станции нет ни одного поезда!".red) : station.trains.each_with_index { |train, index| puts "#{index + 1} - #{train.number}" }
     end
   end
 
