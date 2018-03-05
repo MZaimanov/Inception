@@ -1,6 +1,7 @@
 class Train
   include CompanyName
   include InstanceCounter
+  include Validation
 
 
   attr_accessor :wagons
@@ -21,12 +22,6 @@ class Train
     @speed = 0
     @@trains[number] = self
     register_instance
-  end
-
-  def valid?
-    validate!
-  rescue
-    false
   end
 
   def speed_up(value)
@@ -111,7 +106,7 @@ class Train
 
   def validate!
     raise "Номер поезда не может быть пустым" if number.nil?
-    raise "Не верный формат номера. Формат должен соответвтыовать: XXX-XX - где Х - любая цифра или буква(дефис не обязателен)" if number !~ NUMBER
+    raise "Не верный формат номера. Формат должен соответвтыовать: XXX-XX - где Х - любая цифра или буква(дефис не обязателен)".red if number !~ NUMBER
     true
   end
 end

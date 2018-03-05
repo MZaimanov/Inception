@@ -1,3 +1,4 @@
+require_relative 'validation.rb'
 require_relative 'instance_counter.rb'
 require_relative 'company_name.rb'
 require_relative 'train.rb'

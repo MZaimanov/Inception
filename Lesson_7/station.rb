@@ -1,6 +1,8 @@
 class Station
 
   include InstanceCounter
+  include Validation
+
   @@stations = []
 
   NAME = /^[А-Я]{1}[а-я]+$/
@@ -11,15 +13,9 @@ class Station
   def initialize(name)
     @name = name
     @trains = []
+    validate!
     @@stations << self
     register_instance
-    validate!
-  end
-
-  def valid?
-    validate!
-  rescue
-    false
   end
 
   def self.all
@@ -41,8 +37,8 @@ class Station
   protected
 
   def validate!
-    raise "Название станции не может быть пустым" if name.nil?
-    raise "Название станции пишется по русски и начинается с заглавной буквы" if name !~ NAME
+    raise "Название станции не может быть пустым".red if name.nil?
+    raise "Название станции пишется по русски и начинается с заглавной буквы".red if name !~ NAME
     true
   end
 end

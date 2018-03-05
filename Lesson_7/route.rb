@@ -1,20 +1,16 @@
 class Route
 
   include InstanceCounter
+  include Validation
+
 
 
   attr_reader :stations, :name
 
   def initialize(start_station, end_station)
     @stations = [start_station, end_station]
+    validate!
     register_instance
-    validate!
-  end
-
-  def valid?
-    validate!
-  rescue
-    false
   end
 
   def add_station(station)
@@ -35,12 +31,12 @@ class Route
     puts "#{st_start.name} <===> #{st_stop.name}"
   end
 
-private
+  private
 
   def validate!
     raise "Не верно введены данные. Повторите".red if @stations.any?(&:nil?)
     raise "Для создания маршрута нужны станции".red if @stations.any? { |station| !station.instance_of? Station }
-    raise "начальная и конечная точки маршрута совпадают".red if @stations.first == @stations.last
+    raise "Начальная и конечная точки маршрута совпадают".red if @stations.first == @stations.last
     true
   end
 
