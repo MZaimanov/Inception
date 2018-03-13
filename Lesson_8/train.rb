@@ -102,7 +102,9 @@ class Train
 
   def wagons_trains_list
     raise "У поезда нет вагонов".red if @wagons.empty?
-    @wagons.each_with_index { |index, wagon| yield(index, wagon) }
+    @wagons.each_with_index do |index, wagon|
+      yield(index, wagon) if block_given?
+    end
   end
 
   protected

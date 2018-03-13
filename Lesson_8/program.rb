@@ -269,14 +269,16 @@ class Program
       @stations.empty? ? puts("Пока нет ни одной станции!".red) : @stations.each_with_index { |station, index| puts "#{index + 1} - #{station.name}" }
   end
 
-  def train_list_on_station
-    if stations.empty?
-      puts "Пока нет ни одной станции!".red
-    else
-      station = get_station
-      station.trains.empty? ? puts("На станции нет ни одного поезда!".red) : station.trains.each_with_index { |train, index| puts "#{index + 1} - #{train.number}" }
-    end
+def train_list_on_station
+  raise "Сначала необходимо создать станцию".red if @stations.empty?
+  puts "Список станций:"
+  show_stations_list
+  puts "Введите индекс станции для просмотра списка поездов"
+  num = gets.to_i
+  @stations[num - 1].station_trains_list do |train, index|
+    puts "Поезд №#{train.number} - #{train.view_type} - Количество вагонов в составе - #{train.wagons.count}"
   end
+end
 
   def train_wagons_list
     raise "Сначала необходимо создать поезд".red if @trains.empty?

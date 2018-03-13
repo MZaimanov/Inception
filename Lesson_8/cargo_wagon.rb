@@ -1,20 +1,17 @@
 class CargoWagon < Wagon
 
-  attr_reader :filled
-
-  def initialize(volume)
+  def initialize(space)
     @type = :cargo_wagon
-    @volume = volume
-    @filled = 0
+    super
   end
 
-  def load(volume)
-    raise "Нет свободного места" if volume + @filled > @volume
-    @filled += volume
+  def load(space)
+    raise "Нет свободного места".red if space > free
+    @filled += space
   end
 
   def free
-    @volume - @filled
+    super
   end
 
   def view_type

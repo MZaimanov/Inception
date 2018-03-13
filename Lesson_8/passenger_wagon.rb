@@ -1,20 +1,18 @@
 class PassengerWagon < Wagon
 
-  attr_reader :filled
 
-  def initialize(seats_count)
+  def initialize(space)
     @type = :passenger_wagon
-    @seats_count = seats_count
-    @filled = 0
+    super
   end
 
   def take_a_seat
-    raise "Нет свободных мест".red if @filled == @seats_count
+    raise "Нет свободных мест".red if @filled == @space
     @filled += 1
   end
 
   def free
-    @seats_count - @filled
+    super
   end
 
   def view_type

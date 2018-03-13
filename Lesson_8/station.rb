@@ -36,7 +36,9 @@ class Station
 
   def station_trains_list
     raise "На станции нет поездов".red if @trains.empty?
-    @trains.each { |train| yield(train) }
+    @trains.each do |train|
+      yield train if block_given?
+    end
   end
 
   protected
