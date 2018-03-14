@@ -278,6 +278,8 @@ class Program
     @stations[num - 1].station_trains_list do |train, index|
       puts "Поезд №#{train.number} - #{train.view_type} - Количество вагонов в составе - #{train.wagons.count}"
     end
+  rescue RuntimeError => e
+    puts "Ошибка: #{e.message}"
   end
 
   def train_wagons_list
