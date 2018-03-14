@@ -269,16 +269,16 @@ class Program
       @stations.empty? ? puts("Пока нет ни одной станции!".red) : @stations.each_with_index { |station, index| puts "#{index + 1} - #{station.name}" }
   end
 
-def train_list_on_station
-  raise "Сначала необходимо создать станцию".red if @stations.empty?
-  puts "Список станций:"
-  show_stations_list
-  puts "Введите индекс станции для просмотра списка поездов"
-  num = gets.to_i
-  @stations[num - 1].station_trains_list do |train, index|
-    puts "Поезд №#{train.number} - #{train.view_type} - Количество вагонов в составе - #{train.wagons.count}"
+  def train_list_on_station
+    raise "Сначала необходимо создать станцию".red if @stations.empty?
+    puts "Список станций:"
+    show_stations_list
+    puts "Введите индекс станции для просмотра списка поездов"
+    num = gets.to_i
+    @stations[num - 1].station_trains_list do |train, index|
+      puts "Поезд №#{train.number} - #{train.view_type} - Количество вагонов в составе - #{train.wagons.count}"
+    end
   end
-end
 
   def train_wagons_list
     raise "Сначала необходимо создать поезд".red if @trains.empty?
@@ -295,6 +295,7 @@ end
   end
 
   def fill_wagon
+    raise "Нет вагонов у поезда".red if train_wagons_list.nil?
     train_wagons_list
     puts "Выберете номер вагона для посадки пассажира или добавления груза:"
     wagon_num = gets.to_i
@@ -305,7 +306,7 @@ end
        puts "Груз добавлен в вагон".green
        wagon.load(volume)
     elsif wagon.class == PassengerWagon
-       wagon.take_a_seat
+       wagon.load
        puts "В вагоне один новый пассажир".green
     end
   rescue RuntimeError => e

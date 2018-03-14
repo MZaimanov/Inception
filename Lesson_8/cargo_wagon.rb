@@ -1,13 +1,11 @@
 class CargoWagon < Wagon
 
   def initialize(space)
-    @type = :cargo_wagon
-    super
+    super(:cargo_wagon, space)
   end
 
   def load(space)
-    raise "Нет свободного места".red if space > free
-    @filled += space
+    super(space)
   end
 
   def free
