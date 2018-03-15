@@ -1,4 +1,6 @@
 class Program
+  include TrainControl
+
   attr_accessor :stations, :trains, :routes, :wagons
 
   def initialize
@@ -15,23 +17,6 @@ class Program
     puts "Создана станция: #{name}".green
   rescue RuntimeError => e
     puts "Ошибка: #{e.message}".red
-    retry
-  end
-
-  def create_train
-    puts 'Укажите номер поезда:'
-    name = gets.chomp.to_s
-    puts 'Укажите тип поезда: 1 - пассажирский, 2 - грузовой.'
-    type = gets.chomp.to_i
-    if type == 1
-      @trains << PassengerTrain.new(name)
-      puts "Пасажирский поезд №#{name} создан.".green
-    elsif type == 2
-      @trains << CargoTrain.new(name)
-      puts "Грузовой поезд №#{name} создан.".green
-    end
-  rescue RuntimeError => e
-    puts "Ошибка: #{e.message}"
     retry
   end
 
@@ -244,7 +229,7 @@ class Program
     num = gets.to_i
     current_train = @trains[num - 1]
 
-    if @trains.count >= num && @trains[num - 1] != nil
+    if @trains.count >= num && @trains[num - 1].nil?
       puts 'Неверный порядковый номер или поезду не назначен маршрут.'.red
       return
     else
@@ -266,33 +251,6 @@ class Program
 
   def show_stations_list
     @stations.empty? ? puts('Пока нет ни одной станции!'.red) : @stations.each_with_index { |station, index| puts "#{index + 1} - #{station.name}" }
-  end
-
-  def train_list_on_station
-    raise 'Сначала необходимо создать станцию'.red if @stations.empty?
-    puts 'Список станций:'
-    show_stations_list
-    puts 'Введите индекс станции для просмотра списка поездов'
-    num = gets.to_i
-    @stations[num - 1].station_trains_list do |train, _index|
-      puts "Поезд №#{train.number} - #{train.view_type} - Количество вагонов в составе - #{train.wagons.count}"
-    end
-  rescue RuntimeError => e
-    puts "Ошибка: #{e.message}"
-  end
-
-  def train_wagons_list
-    raise 'Сначала необходимо создать поезд'.red if @trains.empty?
-    puts 'Список поездов:'
-    train_list
-    puts 'Введите индекс поезда для просмотра списка вагонов'
-    @number = gets.to_i
-    @trains[@number - 1].wagons_trains_list do |wagon, index|
-      puts "Вагон №#{index + 1} - #{wagon.view_type}; Свободный объем: #{wagon.free} литров; Занятый объем: #{wagon.filled} литров;".green if wagon.class == CargoWagon
-      puts "Вагон №#{index + 1} - #{wagon.view_type}; Свободно: #{wagon.free} мест; Занято: #{wagon.filled} мест;".green if wagon.class == PassengerWagon
-    end
-  rescue RuntimeError => e
-    puts "Ошибка: #{e.message}"
   end
 
   def fill_wagon
