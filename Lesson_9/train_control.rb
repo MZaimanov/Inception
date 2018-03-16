@@ -1,5 +1,6 @@
 module TrainControl
-  attr_reader :name
+  attr_reader :name, :train_index,
+              :current_train
 
   def create_train_in
     puts 'Укажите номер поезда:'
@@ -17,6 +18,18 @@ module TrainControl
   rescue RuntimeError => e
     puts "Ошибка: #{e.message}"
     retry
+  end
+
+  def choose_train
+    if @trains.empty?
+      puts 'Нет поездов'
+    else
+      puts 'Список поездов:'
+      train_list
+      puts 'Выберете поезд:'
+      @train_index = gets.to_i
+      @current_train = @trains[@train_index - 1]
+    end
   end
 
   def train_list_on_station

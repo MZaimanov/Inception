@@ -1,5 +1,6 @@
 class Program
   include TrainControl
+  include RouteControl
 
   attr_accessor :stations, :trains, :routes, :wagons
 
@@ -20,28 +21,10 @@ class Program
     retry
   end
 
-  def create_route
-    return puts 'Для создания маршрута необходимы две точки назначения'.red if @stations.count < 2
-
-    show_stations_list
-    puts 'Укажите номер станции отправления'
-    one_station = gets.chomp.to_i
-
-    @stations.include?(@stations[one_station - 1])
-    start_station = @stations[one_station - 1]
-
-    puts 'Укажите номер станции прибытия'
-    two_station = gets.chomp.to_i
-
-    @stations.include?(@stations[two_station - 1])
-    end_station = @stations[two_station - 1]
-
-    route = Route.new(start_station, end_station)
-    @routes << route
-    puts "Маршрут: #{start_station.name} - #{end_station.name} создан".green
-  rescue Exception => e
-    puts "Ошибка: #{e.message}"
-  end
+   def create_route
+     return puts 'Для создания маршрута необходимы две точки назначения'.red if @stations.count < 2
+     create_new_route
+   end
 
   def show_routes
     puts 'Список маршрутов:'
@@ -52,73 +35,21 @@ class Program
     end
   end
 
-  def edit_route
-    return puts 'Необходимо создать хотябы один маршрут'.red if @routes.empty?
-
-    show_routes
-
-    puts 'Укажите маршрут для редоктирования'
-    route_index = gets.to_i
-    current_route = @routes[route_index - 1]
-
-    if !current_route.nil?
-      puts 'Текущие станции маршрута'
-      current_route.stations_list
-      puts '1 - добавить станцию в маршрут'
-      puts '2 - удалить станцию из маршрута'
-      route_choice = gets.to_i
-      if route_choice == 1
-        puts 'Список станций:'
-        show_stations_list
-        puts 'Укажите станцию для добавления'
-        to_route = gets.to_i
-        current_route.create_station(@stations[to_route - 1])
-        puts 'Станция добавлена. Текущие станции маршрута:'
-        current_route.stations_list
-      elsif route_choice == 2
-        puts 'Список станций:'
-        show_stations_list
-        puts 'Укажите станцию для удаления'
-        out_route = gets.to_i
-        current_route.delete_station(@stations[out_route - 1])
-        puts 'Станция удалена. Текущие станции маршрута:'
-        current_route.stations_list
-      else
-        puts 'Укажите верные данные.'.red
-        return
-      end
-    else
-      puts 'Повторите'.red
-    end
-  end
-
   def train_list
     @trains.each_with_index { |train, index| puts "#{index + 1}) Поезд №#{train.number} #{train.view_type}" }
   end
 
-  def get_route
-    return puts 'Необходимо создать хотябы один поезд.'.red if @trains.empty?
-    puts 'Список поездов:'
-    train_list
-    puts 'Выберете поезда для задания ему маршрута'
-    num = gets.to_i
-    if @trains.count >= num
-      if @routes.empty?
-        puts 'Нет ни одного маршрута'.red
-        create_route
-      else
-        show_routes
-        puts "Выберете номер маршрута для поезда #{@trains[num - 1].number}"
-        train_route_choice = gets.to_i
-        train_current_route = @routes[train_route_choice - 1]
-        @trains[num - 1].add_route(train_current_route)
-        puts "Маршрут #{train_current_route.show_route}назначен Поезду #{@trains[num - 1].number}"
-      end
-    else
-      puts 'Повторите ввод!'.red
-      add_route
-    end
+  def set_route
+    train_wagon
+    choose_route unless @trains.empty?
+    train_current_route = @routes[route_index - 1]
+    @trains[train_index - 1].get_route(train_current_route)
+    puts "Маршрут #{train_current_route.show_route}назначен Поезду #{@trains[num - 1].number}"
+  rescue StandardError => e
+    puts "Ошибка: #{e.message}"
   end
+
+
 
   def create_wagon
     puts 'Выберете 1 для создания ПАССАЖИРСКОГО вагона'

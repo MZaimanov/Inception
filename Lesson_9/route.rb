@@ -25,15 +25,15 @@ class Route
   def show_route
     st_start = @stations.first
     st_stop = @stations.last
-    puts "#{st_start.name} <===> #{st_stop.name}"
+    puts "#{st_start.name} <===> #{st_stop.name}".green
   end
 
   private
 
   def validate!
     raise 'Не верно введены данные. Повторите'.red if @stations.any?(&:nil?)
-    raise 'Для создания маршрута нужны станции'.red if @stations.any? { |station| !station.instance_of? Station }
-    raise 'Начальная и конечная точки маршрута совпадают'.red if @stations.first == @stations.last
+    raise 'Нет станции'.red if @stations.any? { |s| !s.instance_of? Station }
+    raise 'Совпадение точек маршруа'.red if @stations.first == @stations.last
     true
   end
 end

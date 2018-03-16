@@ -1,3 +1,4 @@
+require_relative 'route_control.rb'
 require_relative 'train_control.rb'
 require_relative 'validation.rb'
 require_relative 'instance_counter.rb'
@@ -50,7 +51,7 @@ loop do
   when 5
     main.show_routes
   when 6
-    main.get_route
+    main.set_route
   when 7
     main.create_wagon
   when 8
