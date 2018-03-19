@@ -1,6 +1,16 @@
 module RouteControl
-  attr_reader :start_station, :end_station,
-              :current_route, :to_route
+  attr_reader :start_station, :end_station, :start_station,
+              :current_route, :to_route, :end_station, :route_index
+
+   def set_route
+    choose_train
+    choose_route unless @trains.empty?
+    train_current_route = @routes[route_index - 1]
+    @trains[train_index - 1].add_route(train_current_route)
+    puts "Маршрут #{train_current_route.show_route}назначен Поезду №#{@current_train.number}"
+  rescue StandardError => e
+    puts "Ошибка: #{e.message}"
+  end
 
   def create_new_route
     station_to_route
@@ -35,8 +45,8 @@ module RouteControl
   def choose_route
     return puts 'Необходимо создать хотябы один маршрут'.red if @routes.empty?
     show_routes
-    puts 'Укажите маршрут для редоктирования'
-    route_index = gets.to_i
+    puts 'Укажите маршрут:'
+    @route_index = gets.to_i
     @current_route = @routes[route_index - 1]
   end
 

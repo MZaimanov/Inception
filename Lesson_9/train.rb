@@ -77,6 +77,7 @@ class Train
   end
 
   def go_next_station
+    puts "#{@route}"
     if current_station != @route.stations.last
       current_station.send_train(self)
       @station_index += 1

@@ -1,3 +1,4 @@
+require_relative 'wagon_control.rb'
 require_relative 'route_control.rb'
 require_relative 'train_control.rb'
 require_relative 'validation.rb'

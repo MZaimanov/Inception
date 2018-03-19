@@ -1,6 +1,6 @@
 module TrainControl
   attr_reader :name, :train_index,
-              :current_train
+              :current_train, :move_choice
 
   def create_train_in
     puts 'Укажите номер поезда:'
@@ -24,7 +24,6 @@ module TrainControl
     if @trains.empty?
       puts 'Нет поездов'
     else
-      puts 'Список поездов:'
       train_list
       puts 'Выберете поезд:'
       @train_index = gets.to_i
@@ -74,5 +73,16 @@ module TrainControl
       @train_index = gets.to_i
       @current_train = @trains[@train_index - 1]
     end
+  end
+
+  def move_train_to
+    puts '1 - отправить на следующую станцию'
+    puts '2 - возвратить на предыдущую станцию'
+    @move_choice = gets.to_i
+  end
+
+  def move_train_display
+    puts "Поезд №#{current_train.number}".green
+    puts "прибыл на станцию #{current_train.current_station.name}".green
   end
 end
