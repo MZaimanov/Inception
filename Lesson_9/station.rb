@@ -44,7 +44,7 @@ class Station
 
   def validate!
     raise 'Название станции не может быть пустым'.red if name.nil?
-    raise 'Название станции пишется по русски и начинается с заглавной буквы'.red if name !~ NAME
+    raise 'Станция пишется по русски с заглавной буквы'.red if name !~ NAME
     true
   end
 end

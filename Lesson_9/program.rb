@@ -2,6 +2,7 @@ class Program
   include TrainControl
   include RouteControl
   include WagonControl
+  include FillControl
 
   attr_accessor :stations, :trains, :routes, :wagons
 
@@ -23,8 +24,11 @@ class Program
   end
 
   def create_route
-    return puts 'Для создания маршрута необходимы две точки назначения'.red if @stations.count < 2
-    create_new_route
+    if @stations.count < 2
+      puts 'Для создания маршрута необходимы две точки назначения'.red
+    else
+      create_new_route
+    end
   end
 
   def show_routes
@@ -32,18 +36,22 @@ class Program
     if @routes.empty?
       puts 'На данный момент маршруты отсутствуют'.red
     else
-      @routes.each_with_index { |route, index| puts " :#{index + 1} Маршрут #{route.show_route}" }
+      @routes.each_with_index { |r, i| puts "#{i + 1} Маршрут #{r.show_route}" }
     end
   end
 
   def train_list
     puts 'Список поездов:'
-    @trains.each_with_index { |train, index| puts "#{index + 1}) Поезд №#{train.number} #{train.view_type}" }
+    @trains.each_with_index do  |train, index|
+      puts "#{index + 1}) Поезд №#{train.number} #{train.view_type}"
+    end
   end
 
   def wagon_list
     puts 'Список вагонов в депо:'
-    @wagons.each_with_index { |wagon, index| puts "#{index + 1}) #{wagon.view_type}" }
+    @wagons.each_with_index do |wagon, index|
+      puts "#{index + 1}) #{wagon.view_type}"
+    end
   end
 
   def set_station_for_train
@@ -74,35 +82,21 @@ class Program
   end
 
   def show_stations_list
-    @stations.empty? ? puts('Пока нет ни одной станции!'.red) : @stations.each_with_index { |station, index| puts "#{index + 1} - #{station.name}" }
-  end
-
-  def fill_wagon
-    raise 'Нет вагонов у поезда'.red if train_wagons_list.nil?
-    train_wagons_list
-    puts 'Выберете номер вагона для посадки пассажира или добавления груза:'
-    wagon_num = gets.to_i
-    wagon = @trains[@number - 1].wagons[wagon_num - 1]
-    if wagon.class == CargoWagon
-      puts 'Какой объем груза вы хотите добавить?'
-      volume = gets.to_i
-      puts 'Груз добавлен в вагон'.green
-      wagon.load(volume)
-    elsif wagon.class == PassengerWagon
-      wagon.load
-      puts 'В вагоне один новый пассажир'.green
+    if @stations.empty?
+      puts 'Пока нет ни одной станции!'.red
+    else
+      @stations.each_with_index { |s, i| puts "#{i + 1} - #{s.name}" }
     end
-  rescue RuntimeError => e
-    puts "Ошибка: #{e.message}"
   end
 
   private
 
   def train_get
-    trains.each_with_index { |train, index| puts "#{index + 1} - №#{train.number} #{train.view_type}" }
+    trains.each_with_index do |train, index|
+      puts "#{index + 1} - №#{train.number} #{train.view_type}"
+    end
     puts 'Укажите номер поезда:'
     number = gets.chomp.to_i
-
     trains[number - 1]
   end
 
