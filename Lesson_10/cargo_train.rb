@@ -1,5 +1,6 @@
 class CargoTrain < Train
   attr_reader :type
+  attr_accessor_with_history :route
 
   def initialize(number)
     @type = :cargo_train
@@ -7,6 +8,6 @@ class CargoTrain < Train
   end
 
   def view_type
-    'Грузовой'
+    'Грузовой '
   end
 end

@@ -45,12 +45,4 @@ class Station
       yield train if block_given?
     end
   end
-
-  # protected
-
-  # def validate!
-  #   raise 'Название станции не может быть пустым'.red if name.nil?
-  #   raise 'Станция пишется по русски с заглавной буквы'.red if name !~ NAME
-  #   true
-  # end
 end

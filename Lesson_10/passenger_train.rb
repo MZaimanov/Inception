@@ -1,5 +1,6 @@
 class PassengerTrain < Train
   attr_reader :type
+  attr_accessor_with_history :route
 
   def initialize(number)
     @type = :passenger_train
@@ -7,6 +8,6 @@ class PassengerTrain < Train
   end
 
   def view_type
-    'Пассажирский'
+    'Пассажирский '
   end
 end

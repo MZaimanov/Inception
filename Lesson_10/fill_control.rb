@@ -1,7 +1,7 @@
 module FillControl
   def fill_wagon
     train_wagons_list
-    puts 'Выберете номер вагона для посадки пассажира или добавления груза:'
+    puts 'Выберете номер вагона для посадки пассажира или добавления груза: '
     wagon_num = gets.to_i
     wagon = @trains[@number - 1].wagons[wagon_num - 1]
     fill_right(wagon)

@@ -8,6 +8,6 @@ class PassengerWagon < Wagon
   end
 
   def view_type
-    'Пассажирский вагон'
+    'Пассажирский вагон '
   end
 end

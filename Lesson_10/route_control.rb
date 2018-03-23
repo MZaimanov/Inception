@@ -68,7 +68,7 @@ module RouteControl
   def del_station_route
     station_edit_route
     current_route.delete_station(@stations[to_route - 1])
-    puts 'Станция удалена. Текущие станции маршрута:'
+    puts 'Станция удалена. Текущие станции маршрута: '
     current_route.stations_list
   end
 end

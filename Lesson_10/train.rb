@@ -5,7 +5,7 @@ class Train
   include Accessors
 
 
-  attr_reader :number, :speed, :wagons
+  attr_reader :number, :speed, :wagons, :name
 
   attr_accessor_with_history :route
 
@@ -49,14 +49,14 @@ class Train
   end
 
   def add_wagon(wagon)
-    raise 'Остановите поезд...демоны' unless @speed.zero?
+    raise 'Остановите поезд...демоны ' unless @speed.zero?
     @wagons << wagon
   rescue RuntimeError => e
     puts "Ошибка: #{e.message}"
   end
 
   def del_wagon(wagon)
-    raise 'Остановите поезд...демоны' unless @speed.zero?
+    raise 'Остановите поезд...демоны ' unless @speed.zero?
     @wagons.delete(wagon)
   rescue RuntimeError => e
     puts "Ошибка: #{e.message}"
@@ -112,13 +112,13 @@ class Train
     end
   end
 
-# protected
+protected
 
-#   attr_writer :speed, :route
+  attr_writer :speed, :route
 
-#   def validate!
-#     raise 'Номер поезда не может быть пустым' if number.nil?
-#     raise 'Формат номера: XXX-XX'.red if number !~ NUMBER
-#     true
-#   end
+  def validate!
+    raise 'Номер поезда не может быть пустым' if number.nil?
+    raise 'Формат номера: XXX-XX'.red if number !~ NUMBER
+    true
+  end
 end

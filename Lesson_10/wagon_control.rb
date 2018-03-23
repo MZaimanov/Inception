@@ -2,8 +2,8 @@ module WagonControl
   attr_reader :wagons, :wagon_index, :wagon, :wagon_choice
 
   def create_wagon
-    puts 'Выберете 1 для создания ПАССАЖИРСКОГО вагона'
-    puts 'Выберете 2 для создания ГРУЗОВОГО вагона'
+    puts 'Выберете 1 для создания ПАССАЖИРСКОГО вагона '
+    puts 'Выберете 2 для создания ГРУЗОВОГО вагона '
     wagon_choice = gets.to_i
     create_pasenger_wagon if wagon_choice == 1
     create_cargo_wagon if wagon_choice == 2

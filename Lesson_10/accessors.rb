@@ -19,11 +19,11 @@ module Accessors
       end
     end
 
-    def strong_attr_accessor(name, true_class)
+    def strong_attr_accessor(name, this_class)
       var_name = "@#{name}".to_sym
       define_method(name) { instance_variable_get(var_name) }
-      define_method("#{name}=".to_sym) do |value|
-        raise ArgumentError, "'#{value}' is not #{true_class} class" unless value.is_a? true_class
+      define_method("#{name}= ".to_sym) do |value|
+        raise ArgumentError, "'#{value}' is not #{this_class} class" unless value.is_a? this_class
         instance_variable_set(var_name, value)
       end
     end

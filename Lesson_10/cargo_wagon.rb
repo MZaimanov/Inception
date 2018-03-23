@@ -4,6 +4,6 @@ class CargoWagon < Wagon
   end
 
   def view_type
-    'Грузовой вагон'
+    'Грузовой вагон '
   end
 end

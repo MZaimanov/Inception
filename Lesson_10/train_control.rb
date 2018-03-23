@@ -5,7 +5,7 @@ module TrainControl
   def create_train_in
     puts 'Укажите номер поезда:'
     @name = gets.chomp.to_s
-    puts 'Укажите тип поезда: 1 - пассажирский, 2 - грузовой.'
+    puts 'Укажите тип поезда: 1 - пассажирский, 2 - грузовой. '
     type = gets.chomp.to_i
     train = PassengerTrain.new(@name) if type == 1
     train = CargoTrain.new(@name) if type == 2

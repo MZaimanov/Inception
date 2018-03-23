@@ -1,6 +1,15 @@
 class Wagon
   include CompanyName
-  attr_reader :type, :filled
+  include Validation
+  include Accessors
+
+  attr_reader :type, :filled, :type, :space
+
+  strong_attr_accessor :train, Train
+
+  validate :space, :presence, true
+
+
 
   def initialize(type, space)
     @type = type

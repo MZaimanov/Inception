@@ -31,7 +31,7 @@ class Route
   private
 
   def validate!
-    raise 'Не верно введены данные. Повторите'.red if @stations.any?(&:nil?)
+    raise 'Не верно введены данные. Повторите '.red if @stations.any?(&:nil?)
     raise 'Нет станции'.red if @stations.any? { |s| !s.instance_of? Station }
     raise 'Совпадение точек маршруа'.red if @stations.first == @stations.last
     true

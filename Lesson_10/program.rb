@@ -25,7 +25,7 @@ class Program
 
   def create_route
     if @stations.count < 2
-      puts 'Для создания маршрута необходимы две точки назначения'.red
+      puts 'Для создания маршрута необходимы две точки назначения '.red
     else
       create_new_route
     end
