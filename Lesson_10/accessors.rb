@@ -23,7 +23,7 @@ module Accessors
       var_name = "@#{name}".to_sym
       define_method(name) { instance_variable_get(var_name) }
       define_method("#{name}= ".to_sym) do |value|
-        raise ArgumentError, "'#{value}' is not #{this_class} class" unless value.is_a? this_class
+        raise ArgumentError, "'#{value}' is not #{this_class} class" unless value.instance_of? this_class
         instance_variable_set(var_name, value)
       end
     end

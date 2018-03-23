@@ -35,20 +35,20 @@ module Validation
 
     protected
 
-    def presence(attribute, validation, arg)
-      raise "#{attribute} не может быть пустым" if arg && validation.nil?
+    def presence(attribute, attribute_val, arg)
+      raise "#{attribute} не может быть пустым" if arg && attribute_val.nil?
     end
 
-    def format(attribute, validation, pattern)
-      raise "#{attribute} неверный формат" if validation !~ pattern
+    def format(attribute, attribute_val, pattern)
+      raise "#{attribute} неверный формат" if attribute_val !~ pattern
     end
 
-    def type(attribute, validation, this_class)
-      raise "#{attribute} не соответствует #{this_class} классу" unless validation.instance_of? this_class
+    def type(attribute, attribute_val, this_class)
+      raise "#{attribute} не соответствует #{this_class} классу" unless attribute_val.instance_of? this_class
     end
 
-    def length(attribute, validation, number)
-      raise "#{attribute} должен быть не менее #{number} символов" if validation.to_s.length < number
+    def length(attribute, attribute_val, number)
+      raise "#{attribute} должен быть не менее #{number} символов" if attribute_val.to_s.length < number
     end
   end
 end
